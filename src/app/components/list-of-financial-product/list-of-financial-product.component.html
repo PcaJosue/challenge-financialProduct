@@ -1,0 +1,58 @@
+<div class="container">
+
+  <div class="searcher">
+    <input type="text" placeholder="Search...">
+  </div>
+
+  <div class="content">
+    <div class="table-content">
+      <table>
+        <tr class="table-header">
+          <th>Logo</th>
+          <th>Nombre del producto</th>
+          <th>Descripción </th>
+          <th>
+            <div class="header-info">
+              <span>Fecha de liberación</span>
+              <app-rounded-info text="i" tooltip="Es la fecha en la que los inversionistas pueden comenzar a adquirir o participar en ese producto específico" [size]="10"></app-rounded-info>
+            </div>
+             </th>
+          <th>
+            <div class="header-info">
+              <span>Fecha de reestructuración</span>
+              <app-rounded-info text="i" tooltip="
+              La fecha de reestructuración en finanzas es cuando se hacen cambios importantes a un producto financiero existente, como tasas de interés o plazos de pago." [size]="10"></app-rounded-info>
+            </div>
+          </th>
+        </tr>
+        <tr class="row" *ngIf="filteredFinancialProducts.length === 0" >
+          <td colspan="5">No existen registros de Productos financieros.</td>
+        </tr>
+        <tr class="row" *ngFor="let product of filteredFinancialProducts">
+          <td>{{product.logo}}</td>
+          <td>{{product.name}}</td>
+          <td>{{product.description}}</td>
+          <td>{{product.date_release}}</td>
+          <td>{{product.date_revision}}</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="footer">
+      <div class="footer__label">{{5}}&nbsp; Resultados</div>
+
+      <select class="footer__select" name="select">
+        <option value="5" selected>5</option>
+        <option value="10" >10</option>
+        <option value="20">20</option>
+      </select>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+
+
