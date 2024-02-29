@@ -8,7 +8,7 @@ import { FinancialProduct } from '../models/financialProduct';
 })
 export class FinancialProductService {
 
-  private URL = 'https://tribu-ti-staffing-desarrollo-afangwbmcrhucqfh.z01.azurefd.net/ipf-msa-productosfinancieros/bp/products'
+  public URL = 'https://tribu-ti-staffing-desarrollo-afangwbmcrhucqfh.z01.azurefd.net/ipf-msa-productosfinancieros/bp/products'
   private headers = new HttpHeaders({'authorId':'499'});
 
   constructor(private http: HttpClient) {  }

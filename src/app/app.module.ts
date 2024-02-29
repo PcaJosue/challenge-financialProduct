@@ -6,6 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { ListOfFinancialProductComponent } from './components/list-of-financial-product/list-of-financial-product.component';
 import { RoundedInfoComponent } from './components/utils/rounded-info/rounded-info.component';
+import { FinancialProductService } from './services/financial-product.service';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,7 @@ import { RoundedInfoComponent } from './components/utils/rounded-info/rounded-in
     AppRoutingModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [FinancialProductService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
