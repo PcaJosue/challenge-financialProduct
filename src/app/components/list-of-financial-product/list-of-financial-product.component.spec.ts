@@ -4,6 +4,7 @@ import { FinancialProductService } from '../../services/financial-product.servic
 import { FinancialProduct } from 'src/app/models/financialProduct';
 import { of, throwError } from 'rxjs';
 import { RoundedInfoComponent } from '../utils/rounded-info/rounded-info.component';
+import { dummyDataFinancialProducts } from '../../models/dummyData';
 
 
 describe('ListOfFinancialProductComponent', () => {
@@ -46,7 +47,7 @@ describe('ListOfFinancialProductComponent', () => {
 
     (mockFinancialProductService.getFinancialProducts as jest.Mock).mockReturnValue(of(mockProducts));
     fixture.detectChanges();
-    expect(component.filteredFinancialProducts).toEqual(mockProducts);
+    expect(component.data).toEqual(mockProducts);
 
   });
 
@@ -80,7 +81,7 @@ describe('ListOfFinancialProductComponent', () => {
 
     fixture.detectChanges();
 
-    expect(component.filteredFinancialProducts.length).toBe(0);
+    expect(component.data.length).toBe(0);
   });
 
 
@@ -114,8 +115,61 @@ describe('ListOfFinancialProductComponent', () => {
     component.search();
 
     // Expect filteredFinancialProducts to contain only Product 1
-    expect(component.filteredFinancialProducts.length).toBe(1);
-    expect(component.filteredFinancialProducts[0]).toEqual(mockProducts[0]);
+    expect(component.data.length).toBe(1);
+    expect(component.data[0]).toEqual(mockProducts[0]);
+  });
+
+  it('should initialize pagination correctly', () => {
+    const mockProducts: FinancialProduct[] = dummyDataFinancialProducts;
+
+    (mockFinancialProductService.getFinancialProducts as jest.Mock).mockReturnValue(of(mockProducts));
+
+    fixture.detectChanges();
+    expect(component.page).toBe(0);
+    expect(component.sizeTable).toBe(5);
+    expect(component.data.length).toBe(5);
+    expect(component.total).toBe(20);
+
+  });
+
+  it('should navigate to the previous page', () => {
+
+    const mockProducts: FinancialProduct[] = dummyDataFinancialProducts;
+
+    (mockFinancialProductService.getFinancialProducts as jest.Mock).mockReturnValue(of(mockProducts));
+    component.page = 2
+    component.goToPage(-1);
+    expect(component.page).toBe(1);
+  });
+
+  it('should navigate to the next page', () => {
+    const mockProducts: FinancialProduct[] = dummyDataFinancialProducts;
+    (mockFinancialProductService.getFinancialProducts as jest.Mock).mockReturnValue(of(mockProducts));
+
+    const initialPage = component.page;
+    component.goToPage(1);
+    expect(component.page).toBe(initialPage + 1);
+  });
+
+  it('should disable previous button on first page', () => {
+    const mockProducts: FinancialProduct[] = dummyDataFinancialProducts;
+    (mockFinancialProductService.getFinancialProducts as jest.Mock).mockReturnValue(of(mockProducts));
+
+    component.page = 0;
+    fixture.detectChanges();
+    const prevButton = fixture.nativeElement.querySelector('.footer__pages:nth-child(1)');
+    expect(prevButton.disabled).toBeTruthy();
+  });
+
+  it('should disable next button on last page', () => {
+    const mockProducts: FinancialProduct[] = dummyDataFinancialProducts;
+    (mockFinancialProductService.getFinancialProducts as jest.Mock).mockReturnValue(of(mockProducts));
+
+    fixture.detectChanges();
+    component.goToPage(3);
+    // const nextButton = fixture.nativeElement.querySelector('.footer__pages:nth-child(3)');
+    // expect(nextButton.disabled).toBeTruthy();
+    expect(component.isLastPage).toBeTruthy();
   });
 
 });

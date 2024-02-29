@@ -29,6 +29,13 @@
   align-items: center;
   padding: 2rem;
 
+    &__paginator{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
     &__label{
       font-size: 1.2rem;
       font-weight: bold;
@@ -40,6 +47,24 @@
       padding: 0 1rem;
       border: 2px solid $border-input;
       border-radius: 3px;
+      cursor: pointer;
+
+    }
+
+    &__pages{
+      width: 5rem;
+      height: 2rem;
+      padding: 0 1rem;
+      border: 2px solid $border-input;
+      border-radius: 3px;
+      background-color: whitesmoke;
+      &:not([disabled]):hover{
+        background-color: #0f265c49;
+        color: $blue ;
+        font-weight: bold;
+        font-size: 1.2rem;
+        cursor: pointer;
+      }
     }
 }
 

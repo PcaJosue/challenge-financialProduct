@@ -12,9 +12,14 @@ export class ListOfFinancialProductComponent implements OnInit {
   constructor(private financialProductService:FinancialProductService){}
 
   private financialProducts:FinancialProduct[] = [];
+  private filteredFinancialProducts:FinancialProduct[] = [];
 
-  public filteredFinancialProducts:FinancialProduct[] = [];
+  public data:FinancialProduct[]=[];
   public searchInput:string= '';
+  public sizeTable:number = 5;
+  public total:number=0;
+  public page:number=0;
+  public isLastPage:boolean=false;
 
 
   ngOnInit(): void {
@@ -23,11 +28,16 @@ export class ListOfFinancialProductComponent implements OnInit {
       this.financialProducts = products;
       this.filteredFinancialProducts = [...products];
 
+      // this.financialProducts = dummyDataFinancialProducts;
+      // this.filteredFinancialProducts = [...dummyDataFinancialProducts];
+      this.buildData();
+
     })
   }
 
   public search():void{
 
+    this.page=0;
 
     if(!this.searchInput.trim()){
       this.filteredFinancialProducts = [...this.financialProducts]
@@ -46,11 +56,33 @@ export class ListOfFinancialProductComponent implements OnInit {
       })
     }
 
+    this.buildData();
   }
+
 
 
   private formatDate(date:Date):string{
     return date.toLocaleDateString('es-ES', { year: 'numeric', month: '2-digit', day: '2-digit' });
+  }
+
+  private checkShowPagination():void{
+    this.isLastPage = Math.ceil(this.total / this.sizeTable) === (this.page+1)
+  }
+
+  public buildData():void{
+
+    this.total = this.filteredFinancialProducts.length;
+    const startIndex = this.page * this.sizeTable;
+    const endIndex = startIndex + this.sizeTable;
+    this.data = this.filteredFinancialProducts.slice(startIndex,endIndex );
+
+    this.checkShowPagination();
+
+  }
+
+  public goToPage(move:number):void{
+    this.page = this.page + move;
+    this.buildData();
   }
 
 }

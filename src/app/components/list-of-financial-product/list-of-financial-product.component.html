@@ -25,10 +25,10 @@
             </div>
           </th>
         </tr>
-        <tr class="row" *ngIf="filteredFinancialProducts.length === 0" >
+        <tr class="row" *ngIf="data.length === 0" >
           <td colspan="5">No existen registros de Productos financieros.</td>
         </tr>
-        <tr class="row" *ngFor="let product of filteredFinancialProducts">
+        <tr class="row" *ngFor="let product of data">
           <td>{{product.logo}}</td>
           <td>{{product.name}}</td>
           <td>{{product.description}}</td>
@@ -39,13 +39,19 @@
     </div>
 
     <div class="footer">
-      <div class="footer__label">{{filteredFinancialProducts.length}} Resultados</div>
+      <div class="footer__label">{{total}} Resultados</div>
 
-      <select class="footer__select" name="select">
-        <option value="5" selected>5</option>
-        <option value="10" >10</option>
-        <option value="20">20</option>
-      </select>
+      <div class="footer__paginator">
+        <button [disabled]="page === 0" class="footer__pages" (click)="goToPage(-1)">{{'<<'}}</button>
+        <select class="footer__select" name="select" [(ngModel)]="sizeTable" (change)="buildData()">
+          <option value="5">5</option>
+          <option value="10" >10</option>
+          <option value="20">20</option>
+        </select>
+        <button [disabled]="isLastPage" class="footer__pages" (click)="goToPage(1)">{{'>>'}}</button>
+
+      </div>
+
 
     </div>
 
