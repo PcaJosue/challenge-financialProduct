@@ -1,7 +1,7 @@
 <div class="container">
 
   <div class="searcher">
-    <input type="text" placeholder="Search...">
+    <input type="text" name="searchInput" [(ngModel)]="searchInput" placeholder="Search..." (input)="search()">
   </div>
 
   <div class="content">
@@ -32,14 +32,14 @@
           <td>{{product.logo}}</td>
           <td>{{product.name}}</td>
           <td>{{product.description}}</td>
-          <td>{{product.date_release}}</td>
-          <td>{{product.date_revision}}</td>
+          <td>{{product.date_release | date:'shortDate'}}</td>
+          <td>{{product.date_revision | date:'shortDate'}}</td>
         </tr>
       </table>
     </div>
 
     <div class="footer">
-      <div class="footer__label">{{filteredFinancialProducts.length}}&nbsp; Resultados</div>
+      <div class="footer__label">{{filteredFinancialProducts.length}} Resultados</div>
 
       <select class="footer__select" name="select">
         <option value="5" selected>5</option>

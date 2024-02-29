@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { ListOfFinancialProductComponent } from './components/list-of-financial-product/list-of-financial-product.component';
 import { RoundedInfoComponent } from './components/utils/rounded-info/rounded-info.component';
 import { FinancialProductService } from './services/financial-product.service';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { FinancialProductService } from './services/financial-product.service';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [FinancialProductService],
   bootstrap: [AppComponent]
