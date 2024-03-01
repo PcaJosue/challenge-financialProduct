@@ -30,4 +30,9 @@ export class FinancialProductService {
     return this.http.put<FinancialProduct[]>(this.URL, financialProduct, {headers:this.headers})
   }
 
+  public deleteFinancialProduct(id:string):Observable<any>{
+    return this.http.delete<any>(this.URL,{ headers:this.headers,params: {id: id}})
+  }
+
+
 }

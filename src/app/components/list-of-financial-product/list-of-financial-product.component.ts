@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FinancialProduct } from 'src/app/models/financialProduct';
 import { FinancialProductService } from '../../services/financial-product.service';
-import { filter, fromEvent } from 'rxjs';
 
 @Component({
   selector: 'app-list-of-financial-product',
@@ -12,8 +11,8 @@ export class ListOfFinancialProductComponent implements OnInit {
 
   constructor(private financialProductService:FinancialProductService){}
 
-  private financialProducts:FinancialProduct[] = [];
-  private filteredFinancialProducts:FinancialProduct[] = [];
+  public financialProducts:FinancialProduct[] = [];
+  public filteredFinancialProducts:FinancialProduct[] = [];
 
   public data:FinancialProduct[]=[];
   public searchInput:string= '';
@@ -22,23 +21,22 @@ export class ListOfFinancialProductComponent implements OnInit {
   public page:number=0;
   public isLastPage:boolean=false;
   public rowSelected:FinancialProduct | null =null
+  public showModal:boolean=false;
+  public loadingData:boolean=true;
 
 
   ngOnInit(): void {
 
+    this.rowSelected=null;
     this.financialProductService.getFinancialProducts()
     .subscribe((products:FinancialProduct[])=>{
-      this.financialProducts = products;
-      this.filteredFinancialProducts = [...products];
-      this.buildData();
+        this.loadingData=false;
+        this.financialProducts = products;
+        this.filteredFinancialProducts = [...products];
+        this.buildData();
+
     })
 
-    fromEvent<MouseEvent>(document, 'click').pipe(
-      filter((event: MouseEvent) => {
-        const clickedElement = event.target as HTMLElement;
-        return !clickedElement.closest(`.options-icon`);
-      })
-    ).subscribe( ()=> this.rowSelected = null);
 
   }
 
@@ -96,5 +94,18 @@ export class ListOfFinancialProductComponent implements OnInit {
     this.rowSelected = product?.id === this.rowSelected?.id ? null : product
   }
 
+  public cancelDelete(){
+    this.showModal=false;
+    this.rowSelected= null;
+  }
 
+  public delete(){
+    this.showModal=false;
+
+    this.rowSelected && this.financialProductService.deleteFinancialProduct(this.rowSelected?.id).subscribe({
+      error: (error) => error.status === 200 && this.ngOnInit(),
+      next : () => this.ngOnInit()
+    })
+
+  }
 }

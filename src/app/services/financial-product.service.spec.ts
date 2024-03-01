@@ -1,4 +1,4 @@
-import { TestBed } from '@angular/core/testing';
+import { TestBed, waitForAsync } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
 import { FinancialProductService } from './financial-product.service';
@@ -90,6 +90,7 @@ describe('FinancialProductService', () => {
   });
 
   it('should update financial product', () => {
+
     const mockFinancialProduct = {
       id: '123',
       name: 'Product Name Test',
@@ -109,5 +110,19 @@ describe('FinancialProductService', () => {
     expect(req.request.method).toBe('PUT');
     req.flush(expectedResponse);
   });
+
+  it('should delete a financial product', waitForAsync(() => {
+    const id = '123';
+    service.deleteFinancialProduct(id).subscribe(response => {
+      expect(response).toBeTruthy();
+    });
+
+    const req = httpMock.expectOne(req => req.method === 'DELETE' && req.url === service.URL);
+    expect(req.request.params.get('id')).toEqual(id);
+
+    req.flush({});
+
+  }));
+
 
 });

@@ -30,6 +30,17 @@
 
 }
 
+.close{
+  text-decoration: unset;
+  float: inline-end;
+  margin-right: 2rem;
+  cursor: pointer;
+  color: $blue;
+  opacity: 0.8;
+  &:hover{
+    opacity: 1;;
+  }
+}
 
 
 .formContent{
@@ -44,6 +55,8 @@
     padding: 1rem 0;
     border-bottom: 1px solid black;
     margin-bottom: 0.5rem;
+
+
   }
 
   &__form{

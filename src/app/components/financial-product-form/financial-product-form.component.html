@@ -11,7 +11,10 @@
 
   <form class="formContent" [formGroup]="formGroup" (ngSubmit)="send()">
 
-    <div class="formContent__title">Formulario de Registro</div>
+    <div class="formContent__title">
+      <span>Formulario de Registro</span>
+      <a class="close" [routerLink]="['/']">X</a>
+    </div>
 
       <div class="formContent__form">
 

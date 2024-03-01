@@ -140,6 +140,15 @@ th, td {
 
 .row {
 
+  &-skeleton{
+    text-align: -webkit-center;
+    span{
+      display: block;
+      width: 6rem;
+      height: 1rem;
+      background-color: #7a797974;
+    }
+  }
   &-description{
     overflow: hidden;
   }
@@ -202,3 +211,78 @@ th, td {
 
 
 
+.modal{
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  z-index: 15;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.689);
+  padding: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &__content{
+    background-color: white;
+    width: 75%;
+    height: 75%;
+    border-radius: 1rem;
+    padding: 4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+  }
+
+  &__title{
+    flex: 4;
+    font-size: 2.5rem;
+    text-align: center;
+    border-bottom: 2px solid $border-table-color;
+  }
+
+
+  &__buttons{
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    margin-top: 2rem;
+
+    button {
+      width: 100px;
+      height: 50px;
+      border-radius: 5px;
+      padding: 10px;
+      text-align: center;
+      font-weight: bold;
+      text-decoration: unset;
+      border: unset;
+      cursor: pointer;
+
+      &:hover{
+        opacity: 1;
+      }
+
+    }
+
+    &-1{
+
+      opacity: 1;
+      background-color: #e9ecf3;
+      color: $blue;
+      &:hover{
+        background-color: #b2b3b8
+      }
+    }
+
+    &-2{
+      opacity: 0.5;
+      background-color: $yellow;
+      color: $blue;
+    }
+
+  }
+}

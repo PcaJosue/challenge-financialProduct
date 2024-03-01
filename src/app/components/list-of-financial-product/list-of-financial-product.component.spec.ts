@@ -18,6 +18,7 @@ describe('ListOfFinancialProductComponent', () => {
 
     mockFinancialProductService = {
       getFinancialProducts: jest.fn(),
+      deleteFinancialProduct: jest.fn()
     };
 
 
@@ -169,9 +170,38 @@ describe('ListOfFinancialProductComponent', () => {
 
     fixture.detectChanges();
     component.goToPage(3);
-    // const nextButton = fixture.nativeElement.querySelector('.footer__pages:nth-child(3)');
-    // expect(nextButton.disabled).toBeTruthy();
     expect(component.isLastPage).toBeTruthy();
+  });
+
+  it('should filter financial products when search input is empty', () => {
+    const component = TestBed.createComponent(ListOfFinancialProductComponent).componentInstance;
+    component.financialProducts = dummyDataFinancialProducts;
+    component.searchInput = '';
+
+    component.search();
+
+    expect(component.filteredFinancialProducts).toEqual(component.financialProducts);
+  });
+
+  it('should delete a financial product and reload data', () => {
+    (mockFinancialProductService.deleteFinancialProduct as jest.Mock).mockReturnValue(of());
+
+    const component = TestBed.createComponent(ListOfFinancialProductComponent).componentInstance;
+    component.rowSelected = dummyDataFinancialProducts[0];
+    component.delete();
+
+    expect(component.showModal).toBeFalsy();
+  });
+
+  it('should select a product', () => {
+    const component = TestBed.createComponent(ListOfFinancialProductComponent).componentInstance;
+    const product: FinancialProduct = dummyDataFinancialProducts[0];
+
+    component.asignProduct(product);
+
+    expect(component.rowSelected).toEqual(product);
+
+
   });
 
 });

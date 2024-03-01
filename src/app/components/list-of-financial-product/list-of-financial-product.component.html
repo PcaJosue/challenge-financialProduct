@@ -12,7 +12,7 @@
 
   <div class="list-content">
     <div class="table-content">
-      <table>
+      <table *ngIf="!loadingData">
         <tr class="table-header">
           <th>Logo</th>
           <th>Nombre del producto</th>
@@ -48,10 +48,32 @@
             <img (click)="asignProduct(product)"  class="options-icon"  src="https://img.icons8.com/?size=256&id=98963&format=png">
             <div class="row-options__menu" *ngIf="product.id === rowSelected?.id">
               <a   class="row-options__menu__item" [routerLink]="['financialProductForm']" [state]="product">Editar</a>
-              <div class="row-options__menu__item" >Eliminar</div>
+              <div class="row-options__menu__item" (click)="showModal = true; " >Eliminar</div>
             </div>
 
           </td>
+        </tr>
+      </table>
+
+      <table *ngIf="loadingData">
+        <tr class="table-header">
+          <th>Logo</th>
+          <th>Nombre del producto</th>
+          <th>Descripción </th>
+          <th>
+            <div class="header-info">
+              <span>Fecha de liberación</span>
+            </div>
+             </th>
+          <th>
+            <div class="header-info">
+              <span>Fecha de reestructuración</span>
+            </div>
+          </th>
+          <th></th>
+        </tr>
+        <tr class="row" *ngFor="let _ of [1,2,3,4,5,6]" >
+          <td class="row-skeleton" *ngFor="let _ of [1,2,3,4,5,6]"><span>&nbsp;</span></td>
         </tr>
       </table>
     </div>
@@ -78,5 +100,17 @@
 </div>
 
 
+<div class="modal" *ngIf="showModal">
+  <div class="modal__content">
+    <div class="modal__title">
+      ¿Estas seguro de eliminar el producto {{rowSelected?.name}}?
+    </div>
 
+    <div class="modal__buttons">
+      <button class="modal__buttons-1" (click)="cancelDelete()">Cancelar</button>
+      <button class="modal__buttons-2" (click)="delete()">Confirmar</button>
+    </div>
+
+  </div>
+</div>
 
