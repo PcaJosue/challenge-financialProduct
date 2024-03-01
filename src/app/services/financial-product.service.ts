@@ -1,7 +1,7 @@
+import { FinancialProduct } from './../models/financialProduct';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { FinancialProduct } from '../models/financialProduct';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +16,14 @@ export class FinancialProductService {
 
   public getFinancialProducts():Observable<FinancialProduct[]>{
     return this.http.get<FinancialProduct[]>(this.URL,{headers:this.headers})
+  }
+
+  public createFinancialProduct(FinancialProduct:FinancialProduct):Observable<FinancialProduct[]>{
+    return this.http.post<FinancialProduct[]>(this.URL,FinancialProduct,{headers:this.headers})
+  }
+
+  public validateFinancialProduct(id:string):Observable<boolean>{
+    return this.http.get<boolean>(this.URL+'/verification',{ headers:this.headers,params: {id: id}})
   }
 
 }

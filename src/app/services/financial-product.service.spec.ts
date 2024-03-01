@@ -55,4 +55,38 @@ describe('FinancialProductService', () => {
     req.flush(mockProducts);
   });
 
+  it('should create financial product', () => {
+    const mockFinancialProduct = {
+      id: '123',
+      name: 'Product Name',
+      description: 'Product Description',
+      logo: 'logo.png',
+      date_release: new Date('2022-01-01'),
+      date_revision: new Date('2023-01-01')
+    };
+
+    const expectedResponse = [mockFinancialProduct];
+
+    service.createFinancialProduct(mockFinancialProduct).subscribe(response => {
+      expect(response).toEqual(expectedResponse);
+    });
+
+    const req = httpMock.expectOne(service.URL);
+    expect(req.request.method).toBe('POST');
+    req.flush(expectedResponse);
+  });
+
+  it('should validate financial product', () => {
+    const mockId = 'mock-id';
+    const expectedResponse = true;
+
+    service.validateFinancialProduct(mockId).subscribe(response => {
+      expect(response).toEqual(expectedResponse);
+    });
+
+    const req = httpMock.expectOne(`${service.URL}/verification?id=${mockId}`);
+    expect(req.request.method).toBe('GET');
+    req.flush(expectedResponse);
+  });
+
 });

@@ -1,17 +1,18 @@
-import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ListOfFinancialProductComponent } from './list-of-financial-product.component';
 import { FinancialProductService } from '../../services/financial-product.service';
 import { FinancialProduct } from 'src/app/models/financialProduct';
 import { of, throwError } from 'rxjs';
 import { RoundedInfoComponent } from '../utils/rounded-info/rounded-info.component';
 import { dummyDataFinancialProducts } from '../../models/dummyData';
+import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 
 describe('ListOfFinancialProductComponent', () => {
   let component: ListOfFinancialProductComponent;
   let fixture: ComponentFixture<ListOfFinancialProductComponent>;
   let mockFinancialProductService: any;
-
 
   beforeEach(async () => {
 
@@ -22,6 +23,7 @@ describe('ListOfFinancialProductComponent', () => {
 
     await TestBed.configureTestingModule({
       declarations: [ ListOfFinancialProductComponent, RoundedInfoComponent ],
+      imports:[FormsModule,  RouterModule.forRoot([])],
       providers: [
         {provide: FinancialProductService, useValue: mockFinancialProductService}
       ]
@@ -71,7 +73,7 @@ describe('ListOfFinancialProductComponent', () => {
     fixture.detectChanges();
 
     const element: HTMLElement = fixture.nativeElement;
-    const footerLabel = element.querySelector('.footer__label')?.textContent;
+    const footerLabel = element.querySelector('.list-footer__label')?.textContent;
 
     expect(footerLabel).toBe('2 Resultados');
   });
@@ -157,7 +159,7 @@ describe('ListOfFinancialProductComponent', () => {
 
     component.page = 0;
     fixture.detectChanges();
-    const prevButton = fixture.nativeElement.querySelector('.footer__pages:nth-child(1)');
+    const prevButton = fixture.nativeElement.querySelector('.list-footer__pages:nth-child(1)');
     expect(prevButton.disabled).toBeTruthy();
   });
 

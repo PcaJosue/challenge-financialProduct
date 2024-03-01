@@ -27,9 +27,6 @@ export class ListOfFinancialProductComponent implements OnInit {
     .subscribe((products:FinancialProduct[])=>{
       this.financialProducts = products;
       this.filteredFinancialProducts = [...products];
-
-      // this.financialProducts = dummyDataFinancialProducts;
-      // this.filteredFinancialProducts = [...dummyDataFinancialProducts];
       this.buildData();
 
     })

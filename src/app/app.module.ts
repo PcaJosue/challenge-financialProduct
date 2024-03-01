@@ -7,19 +7,22 @@ import { AppComponent } from './app.component';
 import { ListOfFinancialProductComponent } from './components/list-of-financial-product/list-of-financial-product.component';
 import { RoundedInfoComponent } from './components/utils/rounded-info/rounded-info.component';
 import { FinancialProductService } from './services/financial-product.service';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FinancialProductFormComponent } from './components/financial-product-form/financial-product-form.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ListOfFinancialProductComponent,
-    RoundedInfoComponent
+    RoundedInfoComponent,
+    FinancialProductFormComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [FinancialProductService],
   bootstrap: [AppComponent]

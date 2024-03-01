@@ -1,10 +1,16 @@
-<div class="container">
+<div class="list-container">
 
-  <div class="searcher">
-    <input type="text" name="searchInput" [(ngModel)]="searchInput" placeholder="Search..." (input)="search()">
+  <div class="list-header">
+
+    <div class="searcher">
+      <input type="text" name="searchInput" [(ngModel)]="searchInput" placeholder="Search..." (input)="search()">
+    </div>
+
+    <a class="list-header__addButton"[routerLink]="['financialProductForm']">Agregar</a>
+
   </div>
 
-  <div class="content">
+  <div class="list-content">
     <div class="table-content">
       <table>
         <tr class="table-header">
@@ -38,17 +44,17 @@
       </table>
     </div>
 
-    <div class="footer">
-      <div class="footer__label">{{total}} Resultados</div>
+    <div class="list-footer">
+      <div class="list-footer__label">{{total}} Resultados</div>
 
-      <div class="footer__paginator">
-        <button [disabled]="page === 0" class="footer__pages" (click)="goToPage(-1)">{{'<<'}}</button>
-        <select class="footer__select" name="select" [(ngModel)]="sizeTable" (change)="buildData()">
+      <div class="list-footer__paginator">
+        <button [disabled]="page === 0" class="list-footer__pages" (click)="goToPage(-1)">{{'<<'}}</button>
+        <select class="list-footer__select" name="select" [(ngModel)]="sizeTable" (change)="buildData()">
           <option value="5">5</option>
           <option value="10" >10</option>
           <option value="20">20</option>
         </select>
-        <button [disabled]="isLastPage" class="footer__pages" (click)="goToPage(1)">{{'>>'}}</button>
+        <button [disabled]="isLastPage" class="list-footer__pages" (click)="goToPage(1)">{{'>>'}}</button>
 
       </div>
 

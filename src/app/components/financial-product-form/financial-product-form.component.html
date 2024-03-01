@@ -1,0 +1,80 @@
+<div class="formContainer">
+
+  <div class="alerts" *ngIf="message && !loading"
+    [ngClass]="{'alerts-success': message.code === 'success', 'alerts-loading': message.code === 'loading'}">
+    {{message.value}}
+  </div>
+
+  <div class="alerts alerts-loading" *ngIf="loading">
+    Saving...
+  </div>
+
+  <form class="formContent" [formGroup]="formGroup" (ngSubmit)="send()">
+
+    <div class="formContent__title">Formulario de Registro</div>
+
+      <div class="formContent__form">
+
+        <div class="formContent__box">
+          <span class="formContent__box__label">ID</span>
+          <input class="formContent__box__input" formControlName="id" [ngClass]="{'formContent__box__input-error': name?.invalid &&  (name?.dirty || name?.touched )}" type="text" />
+          <span *ngIf="id?.invalid && (id?.dirty || id?.touched ) " class="formContent__box__error" >
+            <span *ngIf="!id?.getError('existID')"> Requerido, mínimo 3 caracteres, máximo 10 caracteres.</span>
+            <span *ngIf="id?.getError('existID')">ID ya existe en el registro.</span>
+          </span>
+        </div>
+
+        <div class="formContent__box">
+          <span class="formContent__box__label">Nombre</span>
+          <input class="formContent__box__input" formControlName="name" [ngClass]="{'formContent__box__input-error': name?.invalid &&  (name?.dirty || name?.touched )}" type="text" />
+          <span *ngIf=" name?.invalid &&  (name?.dirty || name?.touched )" class="formContent__box__error" >
+            Requerido, mínimo 5 caracteres, máximo 100 caracteres.
+          </span>
+        </div>
+
+        <div class="formContent__box">
+          <span class="formContent__box__label">Descripción</span>
+          <input class="formContent__box__input" formControlName="description" [ngClass]="{'formContent__box__input-error': description?.invalid &&  (description?.dirty || description?.touched )}" type="text" />
+          <span *ngIf=" description?.invalid &&  (description?.dirty || description?.touched )" class="formContent__box__error" >
+            Requerido, mínimo 10 caracteres, máximo 200 caracteres.
+          </span>
+        </div>
+
+        <div class="formContent__box">
+          <span class="formContent__box__label">Logo</span>
+          <input class="formContent__box__input" formControlName="logo" [ngClass]="{'formContent__box__input-error': logo?.invalid &&  (logo?.dirty || logo?.touched )}" type="text" />
+          <span *ngIf=" logo?.invalid &&  (logo?.dirty || logo?.touched )" class="formContent__box__error" >
+            Requerido.
+          </span>
+        </div>
+
+        <div class="formContent__box">
+          <span class="formContent__box__label">Fecha de Liberación</span>
+          <input class="formContent__box__input formContent__box__input-date"
+            formControlName="date_release"
+            [min]="today | date:'yyyy-MM-dd'"
+            (change)="setDateRevision()"
+            [ngClass]="{'formContent__box__input-error': date_release?.invalid &&  (date_release?.dirty || date_release?.touched )}" type="date" />
+          <span *ngIf=" date_release?.invalid &&  (date_release?.dirty || date_release?.touched )" class="formContent__box__error" >
+            Requerido, debe ser igual o mayor a la fecha actual.
+          </span>
+        </div>
+
+        <div class="formContent__box">
+          <span class="formContent__box__label">Fecha de Revisión</span>
+          <input  class="formContent__box__input formContent__box__input-date" formControlName="date_revision"  [ngClass]="{'formContent__box__input-error': date_revision?.invalid &&  (date_revision?.dirty || date_revision?.touched )}" type="date" />
+          <span *ngIf=" date_revision?.invalid &&  (date_revision?.dirty || date_revision?.touched )" class="formContent__box__error" >
+            Requerido, debe ser exactamente un año posterior a la fecha de liberación..
+          </span>
+        </div>
+
+      </div>
+
+      <div class="formContent__buttons">
+        <button [disabled]="loading" class="formContent__buttons-1" type="button" (click)="reset()">Reiniciar</button>
+        <button [disabled]="loading || submited" class="formContent__buttons-2" type="submit">Enviar</button>
+      </div>
+
+  </form>
+
+</div>
