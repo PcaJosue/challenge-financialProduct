@@ -5,13 +5,12 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FinancialProductService } from '../../services/financial-product.service';
 import { of } from 'rxjs';
 import { By } from '@angular/platform-browser';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 
 describe('FinancialProductFormComponent', () => {
   let component: FinancialProductFormComponent;
   let fixture: ComponentFixture<FinancialProductFormComponent>;
   let mockFinancialProductService: any;
-  let activatedRoute: ActivatedRoute;
 
 
 
@@ -26,7 +25,7 @@ describe('FinancialProductFormComponent', () => {
 
     await TestBed.configureTestingModule({
       declarations: [ FinancialProductFormComponent ],
-      imports:[ReactiveFormsModule],
+      imports:[ReactiveFormsModule,RouterModule.forRoot([])],
       providers: [
         {provide: FinancialProductService, useValue: mockFinancialProductService},
         {
@@ -45,7 +44,6 @@ describe('FinancialProductFormComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(FinancialProductFormComponent);
     component = fixture.componentInstance;
-    activatedRoute = TestBed.inject(ActivatedRoute);
     fixture.detectChanges();
   });
 
