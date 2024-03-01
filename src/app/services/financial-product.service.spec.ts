@@ -89,4 +89,25 @@ describe('FinancialProductService', () => {
     req.flush(expectedResponse);
   });
 
+  it('should update financial product', () => {
+    const mockFinancialProduct = {
+      id: '123',
+      name: 'Product Name Test',
+      description: 'Product Description',
+      logo: 'logo.png',
+      date_release: new Date('2022-01-01'),
+      date_revision: new Date('2023-01-01')
+    };
+
+    const expectedResponse = [mockFinancialProduct];
+
+    service.updateFinancialProduct(mockFinancialProduct).subscribe(response => {
+      expect(response).toEqual(expectedResponse);
+    });
+
+    const req = httpMock.expectOne(service.URL);
+    expect(req.request.method).toBe('PUT');
+    req.flush(expectedResponse);
+  });
+
 });

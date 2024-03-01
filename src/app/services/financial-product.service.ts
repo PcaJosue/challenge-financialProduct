@@ -26,4 +26,8 @@ export class FinancialProductService {
     return this.http.get<boolean>(this.URL+'/verification',{ headers:this.headers,params: {id: id}})
   }
 
+  public updateFinancialProduct(financialProduct:FinancialProduct):Observable<FinancialProduct[]>{
+    return this.http.put<FinancialProduct[]>(this.URL, financialProduct, {headers:this.headers})
+  }
+
 }

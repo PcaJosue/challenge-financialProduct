@@ -1,4 +1,4 @@
-<div class="list-container">
+<div class="list-container" >
 
   <div class="list-header">
 
@@ -6,7 +6,7 @@
       <input type="text" name="searchInput" [(ngModel)]="searchInput" placeholder="Search..." (input)="search()">
     </div>
 
-    <a class="list-header__addButton"[routerLink]="['financialProductForm']">Agregar</a>
+    <a class="list-header__addButton" [routerLink]="['financialProductForm']">Agregar</a>
 
   </div>
 
@@ -30,16 +30,28 @@
               La fecha de reestructuración en finanzas es cuando se hacen cambios importantes a un producto financiero existente, como tasas de interés o plazos de pago." [size]="10"></app-rounded-info>
             </div>
           </th>
+          <th></th>
         </tr>
         <tr class="row" *ngIf="data.length === 0" >
           <td colspan="5">No existen registros de Productos financieros.</td>
         </tr>
         <tr class="row" *ngFor="let product of data">
-          <td>{{product.logo}}</td>
+          <td class="row-img">
+            <img [src]="product.logo"/>
+          </td>
           <td>{{product.name}}</td>
-          <td>{{product.description}}</td>
+          <td class="row-description">{{product.description}}</td>
           <td>{{product.date_release | date:'shortDate'}}</td>
           <td>{{product.date_revision | date:'shortDate'}}</td>
+
+          <td class="row-options">
+            <img (click)="asignProduct(product)"  class="options-icon"  src="https://img.icons8.com/?size=256&id=98963&format=png">
+            <div class="row-options__menu" *ngIf="product.id === rowSelected?.id">
+              <a   class="row-options__menu__item" [routerLink]="['financialProductForm']" [state]="product">Editar</a>
+              <div class="row-options__menu__item" >Eliminar</div>
+            </div>
+
+          </td>
         </tr>
       </table>
     </div>

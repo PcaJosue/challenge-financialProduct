@@ -103,7 +103,6 @@ th, td {
   text-align: center;
   padding: 8px;
   border-bottom: 3px solid $border-table-color;
-  width: 20%;
 }
 
 .table-header{
@@ -136,9 +135,60 @@ th, td {
 .row td{
   font-size: 1rem;
   white-space: nowrap;
-  overflow: hidden;
   text-overflow: ellipsis;
 }
+
+.row {
+
+  &-description{
+    overflow: hidden;
+  }
+
+  &-img img{
+    width: 2rem;
+    height: 2rem;
+  }
+
+  &-options {
+    position: relative;
+
+    img{
+      width: 1.5rem;
+      height: 1.5rem;
+      cursor: pointer;
+      opacity: 0.8;
+      position: relative;
+
+      &:hover{
+        opacity: 1;
+      }
+    }
+
+    &__menu{
+      position: absolute;
+      background-color: $background;
+      top:5px;
+      left: calc(50% + 1.5rem);
+      width: 5rem;
+
+      &__item{
+        cursor: pointer;
+        border-bottom: 1px solid $border-table-color;
+        text-decoration: unset;
+
+        display: block;
+
+        &:hover{
+          background-color: $blue;
+          color: $yellow;
+        }
+      }
+    }
+  }
+}
+
+
+
 .searcher{
   input{
     border: 1px solid $border-input;
@@ -148,5 +198,7 @@ th, td {
     padding-left: 10px;
   }
 }
+
+
 
 

@@ -1,22 +1,22 @@
 import { FinancialProduct } from './../../models/financialProduct';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { firstValueFrom } from 'rxjs';
 import { FinancialProductService } from '../../services/financial-product.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-financial-product-form',
   templateUrl: './financial-product-form.component.html',
   styleUrls: ['./financial-product-form.component.scss']
 })
-export class FinancialProductFormComponent {
+export class FinancialProductFormComponent implements OnInit{
 
   public today:Date= new Date();
   public message:{ value:string, code:string} | null = null;
   public loading:boolean=false;
   public submited:boolean=false;
-
-  private isNew:boolean = true;
+  public isNew:boolean = true;
 
 
 
@@ -41,8 +41,24 @@ export class FinancialProductFormComponent {
     date_revision: new FormControl<string>({value: '', disabled:true}, [Validators.required]),
   });
 
-  constructor(private financialProductService:FinancialProductService){
+  constructor(
+    private financialProductService:FinancialProductService){
 
+  }
+
+  ngOnInit() {
+
+    if(history.state?.id){
+
+      this.formGroup.patchValue({
+        ...history.state,
+        date_revision: new Date(history.state.date_revision).toISOString().slice(0, 10),
+        date_release: new Date(history.state.date_release).toISOString().slice(0, 10),
+      });
+
+      this.isNew=false;
+      this.id?.disable();
+    }
   }
 
   get id(){
@@ -115,6 +131,19 @@ export class FinancialProductFormComponent {
       })
   }
 
+  private editFinancialProduct(FinancialProduct:FinancialProduct){
+    this.financialProductService.updateFinancialProduct(FinancialProduct)
+    .subscribe({
+      next: () => {
+        this.message = { value: 'Producto Financiero Actualizado con éxito', code:'success'};
+        this.submited=true;
+        this.formGroup.disable();
+        this.loading=false;
+      },
+      error: (error) => console.error(error)
+    })
+  }
+
   public async send(){
 
     this.loading = true;
@@ -133,7 +162,7 @@ export class FinancialProductFormComponent {
       date_revision: new Date(this.date_revision?.value)
     }
 
-    this.isNew ? this.createFinancialProduct(newFinancialProduct) : null;
+    this.isNew ? this.createFinancialProduct(newFinancialProduct) : this.editFinancialProduct(newFinancialProduct);
 
   }
 

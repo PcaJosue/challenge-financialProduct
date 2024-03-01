@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FinancialProduct } from 'src/app/models/financialProduct';
 import { FinancialProductService } from '../../services/financial-product.service';
+import { filter, fromEvent } from 'rxjs';
 
 @Component({
   selector: 'app-list-of-financial-product',
@@ -20,16 +21,25 @@ export class ListOfFinancialProductComponent implements OnInit {
   public total:number=0;
   public page:number=0;
   public isLastPage:boolean=false;
+  public rowSelected:FinancialProduct | null =null
 
 
   ngOnInit(): void {
+
     this.financialProductService.getFinancialProducts()
     .subscribe((products:FinancialProduct[])=>{
       this.financialProducts = products;
       this.filteredFinancialProducts = [...products];
       this.buildData();
-
     })
+
+    fromEvent<MouseEvent>(document, 'click').pipe(
+      filter((event: MouseEvent) => {
+        const clickedElement = event.target as HTMLElement;
+        return !clickedElement.closest(`.options-icon`);
+      })
+    ).subscribe( ()=> this.rowSelected = null);
+
   }
 
   public search():void{
@@ -81,5 +91,10 @@ export class ListOfFinancialProductComponent implements OnInit {
     this.page = this.page + move;
     this.buildData();
   }
+
+  public asignProduct(product:FinancialProduct){
+    this.rowSelected = product?.id === this.rowSelected?.id ? null : product
+  }
+
 
 }
